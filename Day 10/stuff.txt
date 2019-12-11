@@ -1,0 +1,4 @@
+quad1: 17 ---> negative (decreasing)
+quad2: 6 -----> positive (increasing)
+quad3: 2 -----> )
+quad4: 11 ------> positive

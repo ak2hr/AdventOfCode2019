@@ -1,0 +1,8 @@
+1. Take setting input, puts in 26
+2. subtracts 4 from that
+3. takes in input, puts in 27
+4. multiplies whats in 27 by 2
+5. adds whats in 27 to whats in 26, puts in 27
+6. outputs 27
+7. subtracts 1 from 28
+8. if 28 is not zero, go back to reading second input, else end
