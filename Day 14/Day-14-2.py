@@ -1,6 +1,7 @@
-import copy
+import copy, math
 
 needed = {}
+have = {}
 inputs = []
 outputs = []
 
@@ -10,12 +11,19 @@ def onlyOre():
             return False
     return True
 
-def addToNeeded(productList):
-    for x in productList:
-        if(x in needed):
-            needed[x] += productList[x]
+def addToNeeded(reactants):
+    for y in reactants:
+        if(y in needed):
+            needed[y] += reactants[y]
         else:
-            needed[x] = productList[x]
+            needed[y] = reactants[y]
+        if(y in have):
+            if(have[y] >= needed[y]):
+                have[y] -= needed[y]
+                needed[y] = 0
+            else:
+                needed[y] -= have[y]
+                have[y] = 0
 
 def make(reactants, product):
     for x in product:
@@ -26,6 +34,14 @@ def make(reactants, product):
                     needed[y] += reactants[y]
                 else:
                     needed[y] = reactants[y]
+                if(y in have):
+                    if(have[y] >= needed[y]):
+                        have[y] -= needed[y]
+                        needed[y] = 0
+                    else:
+                        needed[y] -= have[y]
+                        have[y] = 0
+
 
 def findReactionAndMake(productList):
     for x in productList:
@@ -40,7 +56,7 @@ def findReactionAndMake(productList):
 
         
 
-file = open("Day 14/input.txt", "r")
+file = open("Day 14/test5.txt", "r")
 lines = file.readlines()
 for line in lines:
     divide = line.rstrip().replace(",", "").split(" => ")
@@ -56,12 +72,25 @@ for line in lines:
             temp2[divide[1][x]] = int(divide[1][x-1])
     inputs.append(temp1)
     outputs.append(temp2)
-count = len(outputs)
-for x in range(count):
-    if("FUEL" in outputs[x]):
-        addToNeeded(inputs[x])
+for x in inputs:
+    for y in x:
+      if(y != "ORE" and y not in have):
+          have[y] = 0  
+fuel = 0
 while(True):
-    findReactionAndMake(copy.deepcopy(list(needed.keys())))
-    if(onlyOre()):
-        break
-print(needed['ORE'])
+    needed = {}
+    count = len(outputs)
+    for x in range(count):
+        if("FUEL" in outputs[x]):
+            addToNeeded(inputs[x])
+    while(True):
+        findReactionAndMake(copy.deepcopy(list(needed.keys())))
+        if(onlyOre()):
+            break
+    for x in needed:
+        if(needed[x] < 0):
+            if(x in have):
+                have[x] += abs(needed[x])
+            else:
+                have[x] = abs(needed[x])
+    fuel += 1
