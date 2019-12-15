@@ -56,7 +56,7 @@ def findReactionAndMake(productList):
 
         
 
-file = open("Day 14/test5.txt", "r")
+file = open("Day 14/input.txt", "r")
 lines = file.readlines()
 for line in lines:
     divide = line.rstrip().replace(",", "").split(" => ")
@@ -77,6 +77,8 @@ for x in inputs:
       if(y != "ORE" and y not in have):
           have[y] = 0  
 fuel = 0
+OreSoFar = 0
+zeroes = str(copy.deepcopy(have))
 while(True):
     needed = {}
     count = len(outputs)
@@ -93,4 +95,33 @@ while(True):
                 have[x] += abs(needed[x])
             else:
                 have[x] = abs(needed[x])
+    OreSoFar += needed["ORE"]
     fuel += 1
+    print(fuel)
+    if(str(have) == zeroes or OreSoFar > 1000000000000):
+        break
+print(fuel, ", ", OreSoFar, ", ", have)
+loopFuel = math.floor(1000000000000/OreSoFar) * (fuel)
+oreLeft = 1000000000000 - ((math.floor(1000000000000/OreSoFar)) * OreSoFar)
+fuel = 0
+while(True):
+    needed = {}
+    count = len(outputs)
+    for x in range(count):
+        if("FUEL" in outputs[x]):
+            addToNeeded(inputs[x])
+    while(True):
+        findReactionAndMake(copy.deepcopy(list(needed.keys())))
+        if(onlyOre()):
+            break
+    for x in needed:
+        if(needed[x] < 0):
+            if(x in have):
+                have[x] += abs(needed[x])
+            else:
+                have[x] = abs(needed[x])
+    oreLeft -= needed["ORE"]
+    if(oreLeft < 0):
+        break
+    fuel += 1
+print(loopFuel + fuel)
