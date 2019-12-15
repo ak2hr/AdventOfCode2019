@@ -107,58 +107,44 @@ def runCode(numList):
 #input     output      curCode     lastOpCode   relBase
 
 stepsList = {}
-stepsList[str((0,0))] = 0
-current = (0,0)
 
-def findKnown(x, y, steps):
-    global programList
+def findKnown(point, steps):
     global initial
-    save = copy.deepcopy(initial)
-    save2 = copy.deepcopy(programList)
-    print(x,y)
-    if(str((x,y+1)) not in stepsList):
-        print("up")
+    global programList
+    stepsList[point] = steps
+    saveInitial = copy.deepcopy(initial)
+    saveProgramList = copy.deepcopy(programList)
+    up = (point[0], point[1] + 1)
+    down = (point[0], point[1] - 1)
+    left = (point[0] + 1, point[1])
+    right = (point[0] - 1, point[1])
+    if(up not in stepsList):
         programList[0] = 1
         runCode(initial)
-        if(programList[1] == 0):
-            stepsList[str((x,y+1))] = steps
-        else:
-            stepsList[str((x,y+1))] = steps + 1
-            findKnown(x,y+1, steps+1)
-    initial = copy.deepcopy(save)
-    programList = copy.deepcopy(save2)
-    print(str((4,15)) in stepsList)
-    if(str((x,y-1)) not in stepsList):
-        print("down")
+        if(programList[1] != 0):
+            findKnown(up, steps + 1)
+    initial = copy.deepcopy(saveInitial)
+    programList = copy.deepcopy(saveProgramList)
+    if(down not in stepsList):
         programList[0] = 2
         runCode(initial)
-        if(programList[1] == 0):
-            stepsList[str((x,y-1))] = steps
-        else:
-            stepsList[str((x,y-1))] = steps + 1
-            findKnown(x,y-1, steps+1)
-    initial = copy.deepcopy(save)
-    programList = copy.deepcopy(save2)
-    if(str((x-1,y)) not in stepsList):
-        print("left")
+        if(programList[1] != 0):
+            findKnown(down, steps + 1)
+    initial = copy.deepcopy(saveInitial)
+    programList = copy.deepcopy(saveProgramList)
+    if(left not in stepsList):
         programList[0] = 3
         runCode(initial)
-        if(programList[1] == 0):
-            stepsList[str((x-1,y))] = steps
-        else:
-            stepsList[str((x-1,y))] = steps + 1
-            findKnown(x-1,y, steps+1)
-    initial = copy.deepcopy(save)
-    programList = copy.deepcopy(save2)
-    if(str((x+1,y)) not in stepsList):
-        print("right")
+        if(programList[1] != 0):
+            findKnown(left, steps + 1)
+    initial = copy.deepcopy(saveInitial)
+    programList = copy.deepcopy(saveProgramList)
+    if(right not in stepsList):
         programList[0] = 4
         runCode(initial)
-        if(programList[1] == 0):
-            stepsList[str((x+1,y))] = steps
-        else:
-            stepsList[str((x+1,y-1))] = steps + 1
-            findKnown(x+1,y, steps+1)
+        if(programList[1] != 0):
+            findKnown(right, steps + 1)
+    
     
 
 
@@ -212,11 +198,7 @@ while(True):
     if(programList[1] == 2):
         end = current
         break
-stepsList = {}
-current = end
-stepsList[str(current)] = 0
-findKnown(end[0], end[1], 0)
-print(stepsList)
+findKnown(end, 0)
 max = 0
 for x in stepsList:
     if(stepsList[x] > max):
