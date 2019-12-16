@@ -96,32 +96,34 @@ while(True):
             else:
                 have[x] = abs(needed[x])
     OreSoFar += needed["ORE"]
-    fuel += 1
-    print(fuel)
-    if(str(have) == zeroes or OreSoFar > 1000000000000):
-        break
-print(fuel, ", ", OreSoFar, ", ", have)
-loopFuel = math.floor(1000000000000/OreSoFar) * (fuel)
-oreLeft = 1000000000000 - ((math.floor(1000000000000/OreSoFar)) * OreSoFar)
-fuel = 0
-while(True):
-    needed = {}
-    count = len(outputs)
-    for x in range(count):
-        if("FUEL" in outputs[x]):
-            addToNeeded(inputs[x])
-    while(True):
-        findReactionAndMake(copy.deepcopy(list(needed.keys())))
-        if(onlyOre()):
-            break
-    for x in needed:
-        if(needed[x] < 0):
-            if(x in have):
-                have[x] += abs(needed[x])
-            else:
-                have[x] = abs(needed[x])
-    oreLeft -= needed["ORE"]
-    if(oreLeft < 0):
+    if(OreSoFar > 1000000000000):
         break
     fuel += 1
-print(loopFuel + fuel)
+    print(fuel, ", ", OreSoFar)
+print(fuel)
+
+# print(fuel, ", ", OreSoFar, ", ", have)
+# loopFuel = math.floor(1000000000000/OreSoFar) * (fuel)
+# oreLeft = 1000000000000 - ((math.floor(1000000000000/OreSoFar)) * OreSoFar)
+# fuel = 0
+# while(True):
+#     needed = {}
+#     count = len(outputs)
+#     for x in range(count):
+#         if("FUEL" in outputs[x]):
+#             addToNeeded(inputs[x])
+#     while(True):
+#         findReactionAndMake(copy.deepcopy(list(needed.keys())))
+#         if(onlyOre()):
+#             break
+#     for x in needed:
+#         if(needed[x] < 0):
+#             if(x in have):
+#                 have[x] += abs(needed[x])
+#             else:
+#                 have[x] = abs(needed[x])
+#     oreLeft -= needed["ORE"]
+#     if(oreLeft < 0):
+#         break
+#     fuel += 1
+# print(loopFuel + fuel)
