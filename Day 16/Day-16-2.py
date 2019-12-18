@@ -1,27 +1,14 @@
 import copy, math, pdb
 
-file = open("Day 16/test4.txt", "r")
+file = open("Day 16/input.txt", "r")
 contents = file.read()
-contents = contents * 10
+contents = contents * 10000
 numList =  list(map(int,list(contents)))
-pattern = [0,1,0,-1]
-nextPhase = copy.deepcopy(numList)
+firstSeven = int(''.join(map(str, numList[:7])))
 size = len(numList)
 for q in range(100):
-    currentPat = 0
-    for x in range(1, size + 1):
-        total = 0
-        currentPat = 0
-        for y in range(1, size + 1):
-            if(y % x == 0):
-                currentPat += 1
-            patternVal = pattern[currentPat % 4]
-            addVal = int(numList[y-1]) * patternVal
-            total += addVal
-        nextPhase[x-1] = abs(total) % 10
-        if(abs(total) % 10 == 0):
-            print(x, "total: ", total, " - ", (10000 * 8 % x == 0))
-    numList = copy.deepcopy(nextPhase)
+    for x in range(size - 2, firstSeven - 1, -1):
+        numList[x] = (numList[x+1] + numList[x]) % 10
     print(q)
-print(numList)
+print(numList[firstSeven:firstSeven+8])
         
