@@ -125,8 +125,9 @@ instructions = [
     "OR T J",
     "NOT C T",
     "AND D T",
+    "AND H T",
     "OR T J",
-    "WALK"
+    "RUN"
 ]
 insASCII = []
 for x in instructions:
