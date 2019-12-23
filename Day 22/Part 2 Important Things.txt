@@ -1,0 +1,43 @@
+- position 2020 is very early on in dataset
+
+- card at 2020 must have come from somewhere in deck already
+- will come from the same position every time
+- can create function that says "for this single loop of instructions, the card at 
+  position x came from position y"
+- could follow that chain of positions 101 trillion times, but might be able to look
+  at pattern to find repetition and allow me to skip cycles
+
+- shuffle techniques:
+    - deal into new deck:
+        - card at pos 2020 and card at pos [size - 2020] swap places
+    - cut [num]:
+        - if num is positive:
+            - card at pos 2020 gets replaced with card at 2020 + num
+        - if num is negative and > 2020:
+            - card at pos 2020 gets replaced with card at pos [size - num + 2020]
+        - if num is negative and < 2020:
+            - card at pos 2020 gets replaced with card at pos [2020 - num]
+    - deal with increment [num]:
+        - card at pos 2020 gets replaced with card at (2020 * num) % size
+
+spots that need to keep track of for each techique:
+    - 2020
+    - size - 2020
+    - 2020 + cut num
+    - size - cut num + 2020
+    - 2020 - cut num
+    - (2020 * num) % size
+
+for x in range(0, len(thisDeck)*num, num):
+        (3*7) % len(thisDeck) = pos
+
+x mod m =b
+
+
+
+
+3 * 1 = 3 % 10 = 3
+3 * 8 = 24 % 10 = 4 
+9 * 0 = 0 % 10 = 0
+9 * 1 = 9 % 10 = 9
+9 * 2 = 18 % 10 = 8

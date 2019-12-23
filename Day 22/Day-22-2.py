@@ -1,19 +1,19 @@
 import copy
 
-def newStack(thisDeck):
-    thisDeck.reverse()
+def newStack(pos):
+    global size
+    return size - 1 - pos
 
-def cut(thisDeck, num):
-    temp = thisDeck[num:] + thisDeck[:num]
-    return temp
+def cut(pos, num):
+    global size
+    if(num > 0):
+        return (pos + num) % 10
+    else:
+        return (size + num + pos) % 10
 
-def increment(thisDeck, num):
-    temp = copy.deepcopy(thisDeck)
-    for x in range(0, len(thisDeck)*num, num):
-        temp[x % len(thisDeck)] = thisDeck[int(x / num)]
-    return temp
-
-
+def increment(pos, num):
+    global size
+    return ((size * num) - (pos * num)) % size
 
 file = open("Day 22/input.txt", "r")
 lines = file.readlines()
@@ -21,23 +21,21 @@ instructions = []
 for x in lines:
     instructions.append(x.rstrip())
 
-size = 10007
-deck = []
-newDeck = []
-for x in range(size):
-    deck.append(x)
+size = 10
+repetitions = 101741582076661
 
-for x in instructions:
-    if(x[0] == 'd'):
-        if(x[5] == 'w'):
-            newDeck = increment(deck, int(x[20:]))
-        else:
-            newStack(deck)
-            newDeck = copy.deepcopy(deck)
-    else:
-        newDeck = cut(deck, int(x[4:]))
-    deck = copy.deepcopy(newDeck)
+# pos = 3
+# print(pos)
+# instructions.reverse()
+# for x in instructions:
+#     if(x[0] == 'd'):
+#         if(x[5] == 'w'):  
+#             pos = increment(pos, int(x[20:]))
+#         else:
+#             pos = newStack(pos)
+#     else:
+#         pos = cut(pos, int(x[4:]))
+#     print(x, ": ", pos)
 
-for x in range(size):
-    if(deck[x] == 2019):
-        print(x)
+for x in range(10):
+    print(increment(x, 9), end=' ')

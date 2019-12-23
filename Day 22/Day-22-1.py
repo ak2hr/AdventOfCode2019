@@ -21,23 +21,25 @@ instructions = []
 for x in lines:
     instructions.append(x.rstrip())
 
-size = 10007
+size = 10
 deck = []
 newDeck = []
 for x in range(size):
     deck.append(x)
 
-for x in instructions:
-    if(x[0] == 'd'):
-        if(x[5] == 'w'):
-            newDeck = increment(deck, int(x[20:]))
-        else:
-            newStack(deck)
-            newDeck = copy.deepcopy(deck)
-    else:
-        newDeck = cut(deck, int(x[4:]))
-    deck = copy.deepcopy(newDeck)
+# for x in instructions:
+#     if(x[0] == 'd'):
+#         if(x[5] == 'w'):
+#             newDeck = increment(deck, int(x[20:]))
+#         else:
+#             newStack(deck)
+#             newDeck = copy.deepcopy(deck)
+#     else:
+#         newDeck = cut(deck, int(x[4:]))
+#     deck = copy.deepcopy(newDeck)
 
-for x in range(size):
-    if(deck[x] == 2019):
-        print(x)
+# for x in range(size):
+#     if(deck[x] == 2019):
+#         print(x)
+
+print(increment(deck, 9))
